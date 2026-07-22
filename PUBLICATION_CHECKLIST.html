@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>market-survinsp-ally · GitHub Publication Checklist</title>
+<style>
+  :root {
+    --navy:    #1E2761;
+    --ice:     #CADCFC;
+    --accent:  #C8102E;
+    --ink:     #0F1430;
+    --white:   #FFFFFF;
+    --muted:   #5C6480;
+    --success: #0F7A4D;
+    --warn:    #A16207;
+    --soft:    #F4F6FA;
+    --soft-2:  #ECEEF4;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--soft);
+    color: var(--ink);
+    margin: 0;
+    line-height: 1.55;
+    font-size: 15px;
+  }
+
+  header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 28px 32px 20px;
+    border-bottom: 5px solid var(--accent);
+  }
+  header h1 {
+    font-family: Georgia, serif;
+    font-size: 26px;
+    margin: 0 0 4px 0;
+    font-weight: bold;
+  }
+  header .subtitle {
+    color: var(--ice);
+    font-style: italic;
+    font-size: 14px;
+  }
+
+  main { max-width: 960px; margin: 0 auto; padding: 24px 32px 80px; }
+
+  /* Overall progress card */
+  .overall-card {
+    background: var(--white);
+    border-left: 5px solid var(--accent);
+    border-radius: 6px;
+    padding: 18px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .overall-card .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 6px;
+  }
+  .overall-card .label {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .overall-card .count {
+    color: var(--muted);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+  }
+  .progress-bar {
+    background: var(--soft-2);
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .progress-bar > .fill {
+    background: linear-gradient(90deg, var(--navy), var(--success));
+    height: 100%;
+    transition: width 0.35s ease-out;
+  }
+
+  /* Phase card */
+  .phase {
+    background: var(--white);
+    border-radius: 6px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    overflow: hidden;
+  }
+  .phase-header {
+    padding: 18px 24px 12px;
+    border-bottom: 1px solid var(--soft-2);
+  }
+  .phase-header h2 {
+    font-family: Georgia, serif;
+    color: var(--navy);
+    margin: 0 0 6px 0;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .phase-header h2 .idx {
+    background: var(--navy);
+    color: var(--white);
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: -apple-system, sans-serif;
+    letter-spacing: 0.05em;
+  }
+  .phase-header .kicker {
+    color: var(--muted);
+    font-style: italic;
+    font-size: 13px;
+    margin-top: 2px;
+  }
+  .phase-header .phase-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .phase-header .phase-progress .bar {
+    flex: 1;
+    background: var(--soft-2);
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .phase-header .phase-progress .bar > .fill {
+    background: var(--navy);
+    height: 100%;
+    transition: width 0.35s ease-out;
+  }
+  .phase-header .phase-progress .count {
+    color: var(--muted);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    min-width: 45px;
+    text-align: right;
+  }
+
+  .phase-body { padding: 8px 20px 18px; }
+  .phase-body ul { list-style: none; padding: 0; margin: 0; }
+  .phase-body li {
+    display: flex;
+    gap: 12px;
+    padding: 8px 4px;
+    border-bottom: 1px solid var(--soft-2);
+    line-height: 1.45;
+  }
+  .phase-body li:last-child { border-bottom: none; }
+  .phase-body li input[type="checkbox"] {
+    accent-color: var(--navy);
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .phase-body li label {
+    cursor: pointer;
+    flex: 1;
+  }
+  .phase-body li.done label {
+    color: var(--muted);
+    text-decoration: line-through;
+  }
+  .phase-body li.done label .path,
+  .phase-body li.done label code {
+    text-decoration: line-through;
+    opacity: 0.7;
+  }
+  .phase-body li code {
+    background: var(--soft-2);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+    color: var(--navy);
+    font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  }
+  .phase-body .path {
+    color: var(--accent);
+    font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 13px;
+  }
+
+  .phase-footer {
+    padding: 10px 24px 16px;
+    color: var(--muted);
+    font-size: 13px;
+    font-style: italic;
+    border-top: 1px solid var(--soft-2);
+    background: var(--soft);
+  }
+
+  .you-are-here {
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .you-are-here h3 {
+    margin: 0 0 6px 0;
+    font-family: Georgia, serif;
+    font-size: 17px;
+    color: var(--ice);
+  }
+  .you-are-here p { margin: 6px 0; color: var(--white); }
+  .you-are-here pre {
+    background: rgba(0,0,0,0.35);
+    color: var(--ice);
+    padding: 14px 16px;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-size: 12.5px;
+    line-height: 1.5;
+    margin-top: 10px;
+  }
+
+  .controls {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin: 24px 0 12px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    background: var(--white);
+    color: var(--navy);
+    border: 1px solid var(--ice);
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .btn:hover { background: var(--soft-2); }
+  .btn.danger { color: var(--accent); border-color: var(--accent); }
+  .btn.danger:hover { background: #FDE8EC; }
+
+  footer {
+    color: var(--muted);
+    font-size: 12px;
+    text-align: center;
+    padding: 20px 0 10px;
+  }
+  footer a { color: var(--navy); }
+
+  @media print {
+    body { background: white; font-size: 12px; }
+    header { background: white; color: var(--navy); border-bottom: 3px solid var(--accent); }
+    header .subtitle { color: var(--muted); }
+    .overall-card, .phase, .you-are-here { box-shadow: none; break-inside: avoid; }
+    .overall-card { position: static; }
+    .controls, footer { display: none; }
+    .you-are-here { background: var(--soft); color: var(--ink); }
+    .you-are-here h3, .you-are-here p { color: var(--ink); }
+    .you-are-here pre { background: var(--soft-2); color: var(--ink); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>market-survinsp-ally — GitHub publication checklist</h1>
+  <div class="subtitle">Five phases, ~two evenings of focused work. Checkboxes save automatically in this browser.</div>
+</header>
+
+<main>
+
+<!-- Overall progress -->
+<div class="overall-card">
+  <div class="row">
+    <span class="label">Overall progress</span>
+    <span class="count" id="overall-count">0 / 0 items complete · 0%</span>
+  </div>
+  <div class="progress-bar"><div class="fill" id="overall-fill" style="width:0%"></div></div>
+</div>
+
+<!-- You are here -->
+<div class="you-are-here">
+  <h3>Where you are now</h3>
+  <p>Phase&nbsp;1 (Foundation docs) is complete and the GitHub repo <code style="background:rgba(0,0,0,0.3);color:#CADCFC;padding:1px 6px;border-radius:3px;">sumitsontakke/market-survinsp-ally</code> is claimed. The immediate next step is to push the seven Phase-1 documents to <code style="background:rgba(0,0,0,0.3);color:#CADCFC;padding:1px 6px;border-radius:3px;">main</code>. From a PowerShell window on your Windows machine:</p>
+  <pre>cd E:\PesFinal\market-survinsp-ally\outputs\msa_scaffold
+git init
+git add .
+git commit -m "docs: initial project scaffolding"
+git branch -M main
+git remote add origin https://github.com/sumitsontakke/market-survinsp-ally.git
+git push -u origin main</pre>
+</div>
+
+<!-- Phase 1 -->
+<div class="phase" data-phase="1">
+  <div class="phase-header">
+    <h2><span class="idx">Phase 1</span> Foundation docs</h2>
+    <div class="kicker">Paperwork that goes at the repo root before code migration.</div>
+    <div class="phase-progress">
+      <div class="bar"><div class="fill"></div></div>
+      <span class="count"></span>
+    </div>
+  </div>
+  <div class="phase-body">
+    <ul>
+      <li><input type="checkbox" id="p1_1" checked><label for="p1_1"><span class="path">SCHEMA.md</span> — data boundary contract, aligned with the actual 10-file per-run structure your ABIDES adapter emits</label></li>
+      <li><input type="checkbox" id="p1_2" checked><label for="p1_2"><span class="path">README.md</span> — project arc + headline numbers + module framing + <code>sumitsontakke/market-survinsp-ally</code> URLs</label></li>
+      <li><input type="checkbox" id="p1_3" checked><label for="p1_3"><span class="path">LICENSE</span> — MIT, dual copyright (you + Dr Milan)</label></li>
+      <li><input type="checkbox" id="p1_4" checked><label for="p1_4"><span class="path">CITATION.cff</span> — Zenodo-ready metadata; GitHub renders a "Cite this repository" button when this is present</label></li>
+      <li><input type="checkbox" id="p1_5" checked><label for="p1_5"><span class="path">.gitignore</span> — comprehensive, including the <code>._*</code> macOS cruft sweep</label></li>
+      <li><input type="checkbox" id="p1_6" checked><label for="p1_6"><span class="path">DIRECTORY_LAYOUT.md</span> — target <code>synth/</code> + <code>detect/</code> structure with a mapping table for every current path</label></li>
+      <li><input type="checkbox" id="p1_7" checked><label for="p1_7"><span class="path">CHECKPOINT_HOSTING.md</span> — Zenodo step-by-step guide</label></li>
+    </ul>
+  </div>
+  <div class="phase-footer">All seven files live at <code>outputs/msa_scaffold/</code>, ready to be committed to the repo root.</div>
+</div>
+
+<!-- Phase 2 -->
+<div class="phase" data-phase="2">
+  <div class="phase-header">
+    <h2><span class="idx">Phase 2</span> Repo &amp; Zenodo hookup</h2>
+    <div class="kicker">Account plumbing. Zero-risk work you can do any time.</div>
+    <div class="phase-progress">
+      <div class="bar"><div class="fill"></div></div>
+      <span class="count"></span>
+    </div>
+  </div>
+  <div class="phase-body">
+    <ul>
+      <li><input type="checkbox" id="p2_1" checked><label for="p2_1">Create public GitHub repo <code>sumitsontakke/market-survinsp-ally</code></label></li>
+      <li><input type="checkbox" id="p2_2"><label for="p2_2">Push the seven Phase-1 docs to <code>main</code> as the first commit</label></li>
+      <li><input type="checkbox" id="p2_3"><label for="p2_3">Create a Zenodo account (5 min — sign up with GitHub)</label></li>
+      <li><input type="checkbox" id="p2_4"><label for="p2_4">Toggle the GitHub↔Zenodo integration on for the repo (2 min)</label></li>
+      <li><input type="checkbox" id="p2_5"><label for="p2_5">Add ORCID to your Zenodo profile (2 min if you don't already have one)</label></li>
+    </ul>
+  </div>
+  <div class="phase-footer">At the end of Phase 2 the repo has a landing page, the Zenodo webhook is armed for your first release, and CITATION.cff renders in the sidebar.</div>
+</div>
+
+<!-- Phase 3 -->
+<div class="phase" data-phase="3">
+  <div class="phase-header">
+    <h2><span class="idx">Phase 3</span> Code migration</h2>
+    <div class="kicker">The main body of work. <code>DIRECTORY_LAYOUT.md</code> is the playbook. Roughly two evenings.</div>
+    <div class="phase-progress">
+      <div class="bar"><div class="fill"></div></div>
+      <span class="count"></span>
+    </div>
+  </div>
+  <div class="phase-body">
+    <ul>
+      <li><input type="checkbox" id="p3_1"><label for="p3_1">Tag the current state: <code>git tag pre-monorepo-restructure</code></label></li>
+      <li><input type="checkbox" id="p3_2"><label for="p3_2">Create the empty target skeleton — <code>synth/</code>, <code>detect/</code>, <code>docs/</code>, <code>configs/</code> with placeholder READMEs</label></li>
+      <li><input type="checkbox" id="p3_3"><label for="p3_3">Move synth code: <code>src/synthetic_market_sim/</code> → <code>synth/src/synth/generator/</code> (<code>git mv</code> preserves history)</label></li>
+      <li><input type="checkbox" id="p3_4"><label for="p3_4">Move ABIDES integration: <code>services/abides-synth/</code> → <code>synth/src/synth/abides/</code></label></li>
+      <li><input type="checkbox" id="p3_5"><label for="p3_5">Move calibration service: <code>calibration_service/{fetcher,calibrator,core}/</code> → <code>synth/src/synth/calibration/</code></label></li>
+      <li><input type="checkbox" id="p3_6"><label for="p3_6">Move detect code: <code>src/surveillance_ml/</code> → <code>detect/src/detect/</code> (split <code>models.py</code> into graphsage + tier2_gbm)</label></li>
+      <li><input type="checkbox" id="p3_7"><label for="p3_7">Move training code: <code>training/phase_g_eval.py</code> split into <code>detect/src/detect/evaluation/{phase_g,abides,family_disjoint}.py</code></label></li>
+      <li><input type="checkbox" id="p3_8"><label for="p3_8">Move dashboard: <code>calibration_service/webapp_v2/</code> → <code>detect/src/detect/dashboard/</code> (drop the old v1)</label></li>
+      <li><input type="checkbox" id="p3_9"><label for="p3_9">Move docs: papers, research notes, images → <code>docs/</code></label></li>
+      <li><input type="checkbox" id="p3_10"><label for="p3_10">Delete cruft: <code>._*</code> files, session artefacts, <code>_qa/</code>, superseded webapp v1, <code>.egg-info/</code>, <code>Archive.zip</code></label></li>
+      <li><input type="checkbox" id="p3_11"><label for="p3_11">Add <code>synth/pyproject.toml</code> and <code>detect/pyproject.toml</code>; test <code>pip install -e</code> from a fresh venv</label></li>
+      <li><input type="checkbox" id="p3_12"><label for="p3_12">Wire the <code>Makefile</code>: <code>make reproduce | test | lint | docs | checkpoints</code></label></li>
+      <li><input type="checkbox" id="p3_13"><label for="p3_13">Verify the demo cohort synth → detect → evaluate loop passes end-to-end from a clean clone</label></li>
+      <li><input type="checkbox" id="p3_14"><label for="p3_14">Wire <code>.github/workflows/test.yml</code> — pytest on both modules + Docker build sanity, no GPU</label></li>
+      <li><input type="checkbox" id="p3_15"><label for="p3_15">Commit + push each logical step as its own commit for reviewable history</label></li>
+    </ul>
+  </div>
+  <div class="phase-footer">At the end of Phase 3 the repo is a well-organised monorepo, tests pass green, and <code>make reproduce</code> works.</div>
+</div>
+
+<!-- Phase 4 -->
+<div class="phase" data-phase="4">
+  <div class="phase-header">
+    <h2><span class="idx">Phase 4</span> Release &amp; publish</h2>
+    <div class="kicker">Making it official. When you're ready — typically after venue-disclosure clearance from Dr Milan.</div>
+    <div class="phase-progress">
+      <div class="bar"><div class="fill"></div></div>
+      <span class="count"></span>
+    </div>
+  </div>
+  <div class="phase-body">
+    <ul>
+      <li><input type="checkbox" id="p4_1"><label for="p4_1">Compute SHA-256 for each checkpoint: <code>v1_graphsage.pt</code>, <code>v3_graphsage.pt</code>, <code>v4_graphsage.pt</code>, <code>tier2_gbm.pkl</code></label></li>
+      <li><input type="checkbox" id="p4_2"><label for="p4_2">Write <code>checkpoints_manifest.json</code> with SHA-256 + metrics per artefact</label></li>
+      <li><input type="checkbox" id="p4_3"><label for="p4_3">Draft the GitHub release notes (template in <code>CHECKPOINT_HOSTING.md</code> Step 4)</label></li>
+      <li><input type="checkbox" id="p4_4"><label for="p4_4">Tag <code>v1.0.0</code> via the GitHub Releases UI, attach the checkpoint binaries + manifest</label></li>
+      <li><input type="checkbox" id="p4_5"><label for="p4_5">Verify Zenodo received the webhook and minted a DOI</label></li>
+      <li><input type="checkbox" id="p4_6"><label for="p4_6">Update <code>CITATION.cff</code> with the actual DOI (replace <code>XXXXXXX</code>)</label></li>
+      <li><input type="checkbox" id="p4_7"><label for="p4_7">Update the README BibTeX block with the DOI</label></li>
+      <li><input type="checkbox" id="p4_8"><label for="p4_8">Add the Zenodo DOI badge to the README</label></li>
+      <li><input type="checkbox" id="p4_9"><label for="p4_9">Implement <code>python -m detect.registry.download</code> — pulls checkpoints from Zenodo</label></li>
+      <li><input type="checkbox" id="p4_10"><label for="p4_10">Test the download helper end-to-end from a fresh clone</label></li>
+    </ul>
+  </div>
+  <div class="phase-footer">At the end of Phase 4 anyone can <code>git clone</code> → <code>make checkpoints</code> → <code>make reproduce</code> and get the paper's demo numbers back.</div>
+</div>
+
+<!-- Phase 5 -->
+<div class="phase" data-phase="5">
+  <div class="phase-header">
+    <h2><span class="idx">Phase 5</span> Post-launch polish (optional)</h2>
+    <div class="kicker">Not required for the initial release; each adds discoverability.</div>
+    <div class="phase-progress">
+      <div class="bar"><div class="fill"></div></div>
+      <span class="count"></span>
+    </div>
+  </div>
+  <div class="phase-body">
+    <ul>
+      <li><input type="checkbox" id="p5_1"><label for="p5_1">Take a screen recording of the Metric Timeline dashboard, convert to GIF, add to README</label></li>
+      <li><input type="checkbox" id="p5_2"><label for="p5_2">Write <code>docs/DEVELOPING.md</code> — contributor guide</label></li>
+      <li><input type="checkbox" id="p5_3"><label for="p5_3">Write <code>docs/ARCHITECTURE.md</code> — how the two modules interact, with a diagram</label></li>
+      <li><input type="checkbox" id="p5_4"><label for="p5_4">Set up GitHub issue templates + branch protection on <code>main</code></label></li>
+      <li><input type="checkbox" id="p5_5"><label for="p5_5">Optional: HuggingFace Hub mirror for the v4 checkpoint (bottom of <code>CHECKPOINT_HOSTING.md</code>)</label></li>
+      <li><input type="checkbox" id="p5_6"><label for="p5_6">Post launch announcement: LinkedIn + r/MachineLearning + relevant graph-ML mailing lists (after venue-disclosure clearance)</label></li>
+      <li><input type="checkbox" id="p5_7"><label for="p5_7">Watch GitHub Insights for early stars / clones / referrers — signal for whether to actively promote or let organic growth run</label></li>
+    </ul>
+  </div>
+  <div class="phase-footer">Each item independent — pick as much or as little as you want to invest.</div>
+</div>
+
+<!-- Controls -->
+<div class="controls">
+  <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+  <button class="btn danger" onclick="resetAll()">Reset all checkboxes</button>
+</div>
+
+<footer>
+  Prepared for Sumit Sontakke · MTech (Data Science and Machine Learning) · PES University · Supervisor: Dr. Milan Joshi<br>
+  Checkbox state saves to browser localStorage. Close and reopen anytime — your progress persists on this device.
+</footer>
+
+</main>
+
+<script>
+(function () {
+  const STORAGE_KEY = "msa_publication_checklist_v1";
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+  // --- Restore saved state ------------------------------------
+  function loadState() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+      checkboxes.forEach(cb => {
+        if (saved.hasOwnProperty(cb.id)) cb.checked = saved[cb.id];
+      });
+    } catch (e) { console.warn("Could not restore state:", e); }
+  }
+  function saveState() {
+    const state = {};
+    checkboxes.forEach(cb => { state[cb.id] = cb.checked; });
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  // --- Refresh visual state -----------------------------------
+  function refreshUI() {
+    let overallDone = 0, overallTotal = checkboxes.length;
+
+    document.querySelectorAll(".phase").forEach(phase => {
+      const phaseBoxes = phase.querySelectorAll('input[type="checkbox"]');
+      let phaseDone = 0;
+      phaseBoxes.forEach(cb => {
+        const li = cb.closest("li");
+        if (cb.checked) { li.classList.add("done"); phaseDone++; overallDone++; }
+        else            { li.classList.remove("done"); }
+      });
+      const pct = phaseBoxes.length ? Math.round(100 * phaseDone / phaseBoxes.length) : 0;
+      phase.querySelector(".phase-progress .fill").style.width = pct + "%";
+      phase.querySelector(".phase-progress .count").textContent =
+        `${phaseDone} / ${phaseBoxes.length}  ·  ${pct}%`;
+    });
+
+    const overallPct = overallTotal ? Math.round(100 * overallDone / overallTotal) : 0;
+    document.getElementById("overall-fill").style.width = overallPct + "%";
+    document.getElementById("overall-count").textContent =
+      `${overallDone} / ${overallTotal} items complete · ${overallPct}%`;
+  }
+
+  // --- Wire up --------------------------------------------------
+  checkboxes.forEach(cb => cb.addEventListener("change", () => {
+    saveState();
+    refreshUI();
+  }));
+
+  window.resetAll = function () {
+    if (!confirm("Uncheck every item and clear saved progress?")) return;
+    checkboxes.forEach(cb => cb.checked = false);
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    // Re-check the ones that ship pre-completed (Phase 1 all + Phase 2 first)
+    ["p1_1","p1_2","p1_3","p1_4","p1_5","p1_6","p1_7","p2_1"].forEach(id => {
+      const cb = document.getElementById(id);
+      if (cb) cb.checked = true;
+    });
+    saveState();
+    refreshUI();
+  };
+
+  loadState();
+  refreshUI();
+})();
+</script>
+
+</body>
+</html>

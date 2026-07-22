@@ -1,0 +1,81 @@
+cff-version: 1.2.0
+title: >-
+  market-survinsp-ally: Graph-neural-network market
+  surveillance toolkit for collusive-trading detection
+message: >-
+  If you use this software in your research, please cite
+  both the software itself and the associated papers.
+type: software
+authors:
+  - family-names: Sontakke
+    given-names: Sumit
+    orcid: 'https://orcid.org/0000-0000-0000-0000'
+    affiliation: >-
+      Department of Computer Science and Engineering,
+      PES University, Bengaluru
+  - family-names: Joshi
+    given-names: Milan
+    name-suffix: Dr.
+    affiliation: >-
+      Department of Computer Science and Engineering,
+      PES University, Bengaluru
+    role: supervisor
+repository-code: 'https://github.com/sumitsontakke/market-survinsp-ally'
+url: 'https://github.com/sumitsontakke/market-survinsp-ally'
+abstract: >-
+  A research toolkit for detecting collusive market
+  manipulation with graph neural networks. Ships as two
+  independent modules with an on-disk boundary: a
+  synthetic-data generator with ABIDES integration and
+  configurable manipulation-family injection, and a
+  detector stack (baseline GraphSAGE, bolt-on Gradient
+  Boosting Machine over six engineered features, and a
+  feature-augmented GraphSAGE) with a Streamlit
+  investigator dashboard. Includes an evaluation harness
+  for within-generator, cross-generator, and
+  family-disjoint out-of-distribution regimes.
+keywords:
+  - market surveillance
+  - graph neural networks
+  - GraphSAGE
+  - gradient boosting
+  - out-of-distribution generalisation
+  - collusive trading
+  - ABIDES
+  - agent-based simulation
+  - financial machine learning
+  - RegTech
+license: MIT
+version: 1.0.0
+date-released: '2026-07-15'
+doi: 10.5281/zenodo.XXXXXXX
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Sontakke
+      given-names: Sumit
+    - family-names: Joshi
+      given-names: Milan
+  title: >-
+    Feature-Augmented Graph Neural Networks for
+    Out-of-Distribution Detection of Collusive Market
+    Manipulation: A Multi-Cohort Study
+  year: 2026
+  journal: >-
+    Proceedings of a conference to be confirmed
+  url: >-
+    https://github.com/sumitsontakke/market-survinsp-ally/blob/main/docs/papers/model_journey_paper.pdf
+references:
+  - type: article
+    title: >-
+      Trade Market Manipulation Detection with Graph
+      Neural Networks: A Calibrated-Synthesis-to-Deployment
+      Surveillance Pipeline
+    authors:
+      - family-names: Sontakke
+        given-names: Sumit
+      - family-names: Joshi
+        given-names: Milan
+    year: 2026
+    url: >-
+      https://github.com/sumitsontakke/market-survinsp-ally/blob/main/docs/papers/model_journey_paper_v2.pdf

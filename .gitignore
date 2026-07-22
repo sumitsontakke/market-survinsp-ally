@@ -1,0 +1,148 @@
+# ───────────────────────────────────────────────
+# market-survinsp-ally · .gitignore
+# ───────────────────────────────────────────────
+
+# --- Python -----------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+*.egg
+build/
+dist/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+MANIFEST
+pip-wheel-metadata/
+
+# --- Virtual environments ----------------------------------
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# --- Tooling caches ----------------------------------------
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pytype/
+.coverage
+.coverage.*
+.cache
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# --- Notebooks ---------------------------------------------
+.ipynb_checkpoints/
+*.ipynb-meta
+
+# --- Model checkpoints & large data ------------------------
+# All checkpoints and cohorts live off-repo (Zenodo, git-lfs demo only)
+*.ckpt
+*.pt
+*.pth
+*.safetensors
+*.h5
+*.hdf5
+*.npy
+*.npz
+*.parquet
+*.arrow
+*.feather
+
+# Model registry local snapshots
+data/model_registry/
+model_registry/
+detect/data/model_registry/
+
+# Cohorts — the demo cohort is git-lfs'd; everything else is generated
+cohorts/*
+!cohorts/.gitkeep
+!cohorts/demo/
+
+# --- Docker + Compose --------------------------------------
+# Compose files ARE tracked; runtime artefacts are not.
+docker-compose.override.yml
+.docker/
+
+# --- Streamlit ---------------------------------------------
+.streamlit/secrets.toml
+.streamlit/config.toml
+
+# --- LaTeX build artefacts ---------------------------------
+docs/papers/*.aux
+docs/papers/*.log
+docs/papers/*.out
+docs/papers/*.toc
+docs/papers/*.fls
+docs/papers/*.fdb_latexmk
+docs/papers/*.synctex.gz
+docs/papers/*.bbl
+docs/papers/*.blg
+
+# --- Editor & OS cruft -------------------------------------
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+.vs/
+*.swp
+*.swo
+*~
+*.bak
+.direnv/
+.envrc
+
+# --- macOS metadata ----------------------------------------
+# The market-survinsp-ally source tree is littered with ._* twin
+# files from a macOS host. Never ship them.
+**/._*
+**/.DS_Store
+
+# --- Secrets & credentials ---------------------------------
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+credentials.json
+secrets.yaml
+
+# --- CI & profiling artefacts ------------------------------
+*.prof
+.profile/
+htmlcov_*/
+
+# --- Zenodo release artefacts ------------------------------
+release/
+*.tar.gz
+*.zip
+!examples/*.zip
+
+# --- Explicit allow-list for tracked binary examples -------
+!docs/img/*.png
+!docs/img/*.jpg
+!docs/papers/*.pdf
+!synth/tests/fixtures/**
+!detect/tests/fixtures/**
