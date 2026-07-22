@@ -5,7 +5,7 @@
 > `market-survinsp-ally` = *market surveillance & inspection ally*. A companion tool for a human surveillance analyst, not a replacement.
 
 <p align="center">
-  <img alt="Detector performance summary" src="docs/img/pipeline_overview.png" width="720"/>
+  <img alt="Five-layer surveillance pipeline: NSE bhavcopy calibration → synthesizer with manipulation injection → graph construction → three-detector stack → investigator dashboard" src="docs_img/pipeline.png" width="720"/>
 </p>
 
 Two independent modules with a clean on-disk boundary:
@@ -66,6 +66,20 @@ Full reproduction of the paper cohorts requires GPU + Docker; see [`docs/REPRODU
 
 ---
 
+## Headline visualisation
+
+The three-regime results in one chart — same numbers as the table above, showing where each detector stands across within-generator, cross-generator, and family-disjoint tests.
+
+<p align="center">
+  <img alt="Detector performance across three OOD regimes: within-generator OOD (v1 0.638, tier-2 0.968, v4 0.984); cross-generator ABIDES (v1 0.518 chance, v4 0.842); family-disjoint average (tier-2 0.958, v4 0.462)" src="docs_img/results.png" width="720"/>
+</p>
+
+The architectural finding — bolt-on tier-2 generalises across manipulation families held out at training time, while the end-to-end v4 network collapses:
+
+<p align="center">
+  <img alt="Family-disjoint AUC by held-out family: tier-2 holds 0.906 to 0.994 while v4 collapses to 0.374 to 0.533" src="docs_img/family_disjoint.png" width="720"/>
+</p>
+
 ## Try the investigator dashboard
 
 ```bash
@@ -73,11 +87,7 @@ docker compose -f detect/docker-compose.yml up webapp
 open http://localhost:8505/Metric_Timeline
 ```
 
-<p align="center">
-  <img alt="Metric Timeline dashboard" src="docs/img/dashboard_metric_timeline.png" width="720"/>
-</p>
-
-Landing pages of interest: `/Metric_Timeline` (model evolution + drift), `/Phase_G_Investigation` (per-trader deep dive with 3D subgraph + LLM justification), `/Demo_Review` (guided walk-through for a first-time viewer).
+Landing pages of interest: `/Metric_Timeline` (model evolution + drift), `/Phase_G_Investigation` (per-trader deep dive with 3D subgraph + LLM justification), `/Demo_Review` (guided walk-through for a first-time viewer). A live screenshot will be added here once the dashboard is captured on a real screen.
 
 ---
 
