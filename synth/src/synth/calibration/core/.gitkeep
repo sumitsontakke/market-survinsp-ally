@@ -1,0 +1,6 @@
+# Shared code package mounted into both fetcher and calibrator
+# containers. Files arrive in subsequent deliverables:
+#   - config.py          (D2)
+#   - models.py          (D2)
+#   - database.py        (D3)
+#   - nse_calibrator.py  (D5)

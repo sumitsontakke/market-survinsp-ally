@@ -1,0 +1,1 @@
+"""Registry and ID generation."""
