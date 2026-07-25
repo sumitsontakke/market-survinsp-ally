@@ -1,0 +1,86 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "msa-synth"
+version = "0.1.0"
+description = "NSE-calibrated synthetic market data generator with ABIDES integration and manipulation-family injection"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Sumit Sontakke" },
+    { name = "Milan Joshi" },
+]
+keywords = [
+    "market-surveillance",
+    "synthetic-market-data",
+    "ABIDES",
+    "agent-based-simulation",
+    "collusive-trading",
+    "NSE",
+    "manipulation-detection",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Financial and Insurance Industry",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Office/Business :: Financial :: Investment",
+]
+dependencies = [
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "scipy>=1.11",
+    "pyyaml>=6.0",
+    "requests>=2.31",
+    "pyarrow>=14.0",
+]
+
+[project.optional-dependencies]
+abides = [
+    # ABIDES itself is vendored via git submodule; these are the extra deps
+    "gymnasium>=0.29",
+]
+test = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+]
+dev = [
+    "ruff>=0.1",
+    "mypy>=1.7",
+]
+
+[project.urls]
+Homepage      = "https://github.com/sumitsontakke/market-survinsp-ally"
+Repository    = "https://github.com/sumitsontakke/market-survinsp-ally"
+Documentation = "https://github.com/sumitsontakke/market-survinsp-ally/tree/main/synth"
+Issues        = "https://github.com/sumitsontakke/market-survinsp-ally/issues"
+
+[project.scripts]
+synth = "synth.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where   = ["src"]
+include = ["synth*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts   = "-ra --strict-markers"
+
+[tool.ruff]
+line-length    = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4", "SIM"]
+ignore = ["E501"]  # line-length handled separately

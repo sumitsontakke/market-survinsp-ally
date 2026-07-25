@@ -1,0 +1,103 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "msa-detect"
+version = "0.1.0"
+description = "Graph-neural-network detectors for collusive market manipulation, with a bolt-on GBM, investigator dashboard, and OOD evaluation harness"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Sumit Sontakke" },
+    { name = "Milan Joshi" },
+]
+keywords = [
+    "graph-neural-networks",
+    "GraphSAGE",
+    "gradient-boosting",
+    "market-surveillance",
+    "collusive-trading",
+    "out-of-distribution",
+    "financial-machine-learning",
+    "RegTech",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Financial and Insurance Industry",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Office/Business :: Financial :: Investment",
+]
+
+# Core dependencies deliberately keep the *default* install CPU-only so someone
+# can `pip install msa-detect` on a laptop without pulling CUDA wheels. GPU
+# extras below layer on PyG + torch-scatter for the v4 GraphSAGE retrain.
+dependencies = [
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "scikit-learn>=1.3",
+    "matplotlib>=3.7",
+    "seaborn>=0.12",
+    "torch>=2.1",
+    "torch-geometric>=2.4",
+    "streamlit>=1.28",
+    "plotly>=5.17",
+    "pyyaml>=6.0",
+    "pyarrow>=14.0",
+]
+
+[project.optional-dependencies]
+gpu = [
+    # torch is installed above, but users who want the sm_120 wheels should
+    # install PyTorch nightly manually per the docs/GPU.md guide; this extra
+    # only guards the PyG-companion scatter/sparse deps.
+    "torch-scatter>=2.1",
+    "torch-sparse>=0.6",
+]
+llm = [
+    # optional Ollama helper for LLM justifications in the dashboard
+    "requests>=2.31",
+]
+test = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+]
+dev = [
+    "ruff>=0.1",
+    "mypy>=1.7",
+]
+
+[project.urls]
+Homepage      = "https://github.com/sumitsontakke/market-survinsp-ally"
+Repository    = "https://github.com/sumitsontakke/market-survinsp-ally"
+Documentation = "https://github.com/sumitsontakke/market-survinsp-ally/tree/main/detect"
+Issues        = "https://github.com/sumitsontakke/market-survinsp-ally/issues"
+
+[project.scripts]
+detect = "detect.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where   = ["src"]
+include = ["detect*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts   = "-ra --strict-markers"
+
+[tool.ruff]
+line-length    = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4", "SIM"]
+ignore = ["E501"]
