@@ -1,0 +1,65 @@
+# Rung 4 GraphSAGE on the calibrated R01-R24 cohort.
+#
+# Cohort `R3_CALIBRATED_24` is produced by training/synthetic/calibrated_runner.py
+# in Milestone 3 - it regenerates R01-R24 with simulator parameters seeded
+# from the latest CalibrationParams (NSE bhavcopy-derived). The same
+# regenerated cohort is the basis for the Rung 3 vs Rung 4 comparison.
+
+experiment_id: rung4_sage_v1_calibrated
+seed: 42
+
+model:
+  family: graphsage
+  layers: [128, 64]
+  dropout: 0.3
+  pooling: mean
+
+features:
+  edges:
+    - lead_lag_corr
+    - signed_imbalance
+    - traded_volume
+    - market_impact_pre
+    - market_impact_post
+    - interaction_count
+    - best_lag
+    - best_lag_value
+  nodes:
+    - trader_total_volume
+    - trader_unique_counterparties
+  static_threshold: null
+  adaptive_sparsification:
+    method: knn
+    k: 12
+
+data:
+  runs: R3_CALIBRATED_24
+  window_minutes: null         # per-run mode (per-window only if M3 ring recall stalls)
+  bucket_minutes: 1
+  source: orders
+
+calibration:
+  apply: true
+  date: latest
+
+split:
+  policy: run_holdout
+  holdout_runs: [R09_ring_high_low_single_s41, R10_ring_high_low_multi_s43,
+                 R11_ring_medium_medium_single_s47, R17_mixed_high_low_single_s73,
+                 R18_mixed_high_low_multi_s79, R19_mixed_medium_medium_single_s83]
+  cv_folds: 5
+
+training:
+  epochs: 50
+  batch_size: 32
+  optimizer: adam
+  lr: 1.0e-3
+  early_stopping_patience: 8
+
+loss:
+  family: weighted_bce
+  pos_weight: auto
+
+evaluation:
+  thresholds: [0.10, 0.20, 0.30, 0.40, 0.50, 0.60]
+  metric_bundle: standard

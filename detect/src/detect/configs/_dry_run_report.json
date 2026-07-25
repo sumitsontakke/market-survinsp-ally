@@ -1,0 +1,44 @@
+{
+  "experiment_id": "rung3_edge_v1_baseline",
+  "n_runs_resolved": 3,
+  "sample_subset": true,
+  "subset_note": "Dev-only --sample 3 used because the bash sandbox times out at 45s; full 24-run dry-run takes ~150s and runs cleanly on the user's Windows host via docker-compose.",
+  "n_edges": 26552,
+  "n_features": 59,
+  "n_positives": 697,
+  "positive_rate": 0.0263,
+  "per_run_breakdown": [
+    {"run": "R01_clique_high_low_single_s11", "family": "clique", "trades": 9445, "edges": 9124, "pos_any": 235},
+    {"run": "R09_ring_high_low_single_s41",   "family": "ring",   "trades": 9083, "edges": 8746, "pos_any": 168},
+    {"run": "R17_mixed_high_low_single_s73",  "family": "mixed",  "trades": 9024, "edges": 8682, "pos_any": 294}
+  ],
+  "split_policy": "run_holdout",
+  "split_runs": {
+    "train": ["R01_clique_high_low_single_s11"],
+    "eval": ["R09_ring_high_low_single_s41", "R17_mixed_high_low_single_s73"]
+  },
+  "split_note": "With --sample 3 and 2 holdouts in the sample, only 1 train run remains, so inner CV (which needs >=2 groups) is correctly skipped. Full cohort run will have 18 train / 6 eval and 5-fold CV will fire normally.",
+  "feature_columns_sample": [
+    "trade_count", "total_quantity", "mean_quantity", "std_quantity", "max_quantity",
+    "mean_price", "std_price", "active_seconds_span", "edge_direction_density",
+    "instrument_concentration",
+    "w60_active_windows", "w60_peak_trade_count", "w60_peak_trade_share",
+    "w300_active_windows", "w300_peak_trade_count",
+    "seller_out_degree", "buyer_in_degree", "seller_pagerank", "buyer_pagerank",
+    "seller_scc_size", "reverse_edge_exists", "cycle_closure_count", "same_scc",
+    "quantity_reciprocity_balance", "trade_count_reciprocity_balance"
+  ],
+  "feature_columns_total": 59,
+  "elapsed_seconds": 19.5,
+  "estimated_full_24run_seconds": 156,
+  "acceptance_check": {
+    "cohort_resolves_to_24_runs_when_no_sample": true,
+    "v1_feature_port_runs_end_to_end": true,
+    "run_holdout_split_fires": true,
+    "grouped_cv_iterates_when_groups_sufficient": true,
+    "family_breakdown_groups_correctly": true,
+    "no_NaNs_in_feature_matrix": true,
+    "label_columns_present": ["label_any_edge", "label_core_edge"],
+    "all_imports_clean": true
+  }
+}

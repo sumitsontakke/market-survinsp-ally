@@ -1,0 +1,19 @@
+{
+  "cv_f1": 0.07259177477228816,
+  "cv_auc": 0.8935006686923745,
+  "cv_precision": 0.037760229720028717,
+  "cv_recall": 0.9359430604982206,
+  "cv_threshold": 0.6,
+  "locked_clique_recall": -1.0,
+  "locked_ring_recall": -1.0,
+  "locked_mixed_recall": 1.0,
+  "locked_benign_alarm": -1.0,
+  "locked_per_run": {
+    "R17_mixed_high_low_single_s73": 1.0
+  },
+  "n_train_runs": 3,
+  "n_eval_runs": 1,
+  "n_edges_train": 15962,
+  "n_pos_edges_train": 281,
+  "seed": 42
+}

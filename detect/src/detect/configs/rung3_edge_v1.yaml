@@ -1,0 +1,50 @@
+# Rung 3 reference config - engineered edge-level XGBoost.
+#
+# Hyperparameters match the proven Phase 1 v1 setup (verbatim from
+# scripts/run_edge_level_experiment.py: n_estimators=500, max_depth=7,
+# lr=0.05). Feature pack is the full v1 set (~30 features).
+#
+# Per the user's Option A decision (May 2026): we are NOT trying to
+# reproduce the published 0.86 F1 here - Phase 1's training cohort no
+# longer exists on disk. This config defines the scaffold so a future
+# retraining on the calibrated R01-R24 cohort (or any other) can run
+# unchanged.
+
+experiment_id: rung3_edge_v1_baseline
+seed: 42
+
+model:
+  family: xgboost_edge
+  n_estimators: 500
+  max_depth: 7
+  learning_rate: 0.05
+  subsample: 0.85
+  colsample_bytree: 0.85
+  device: cpu
+
+features:
+  edges: V1_FULL_SET            # ~30 v1 features (PageRank/SCC/reciprocity/etc.)
+  static_threshold: null        # threshold is OOF-tuned at eval time
+
+data:
+  runs: PHASE1_R01_R24
+  bucket_minutes: 1
+  source: orders
+
+calibration:
+  apply: false                  # the calibrated cohort is R3_CALIBRATED_24
+
+split:
+  policy: run_holdout
+  holdout_runs: [R09_ring_high_low_single_s41, R10_ring_high_low_multi_s43,
+                 R11_ring_medium_medium_single_s47, R17_mixed_high_low_single_s73,
+                 R18_mixed_high_low_multi_s79, R19_mixed_medium_medium_single_s83]
+  cv_folds: 5
+
+loss:
+  family: weighted_bce
+  pos_weight: auto
+
+evaluation:
+  thresholds: [0.10, 0.20, 0.30, 0.40, 0.50, 0.60]
+  metric_bundle: standard
