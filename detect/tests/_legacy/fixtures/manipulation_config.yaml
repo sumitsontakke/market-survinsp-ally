@@ -1,0 +1,47 @@
+schema_version: "0.1.0"
+generator_version: "0.2.0"
+seed: 31
+session:
+  trade_date: "2026-03-14"
+  open_time: "09:30:00"
+  close_time: "10:00:00"
+  timezone: "UTC"
+brokers:
+  count: 3
+beneficial_owners:
+  count: 10
+accounts:
+  per_owner_min: 1
+  per_owner_max: 2
+traders:
+  profiles:
+    retail_random: 0.25
+    momentum: 0.15
+    mean_reversion: 0.15
+    institutional_slicer: 0.1
+    liquidity_provider: 0.35
+instruments:
+  - symbol: "ALPHA"
+    asset_class: "equity"
+    tick_size: 0.01
+    lot_size: 1
+    price_band: [98.0, 102.0]
+simulation:
+  steps: 30
+  passive_order_probability: 0.45
+  aggressive_order_probability: 0.55
+  cancel_probability: 0.0
+  base_order_size: 30
+  max_order_size: 180
+output:
+  format: "csv"
+scenarios:
+  - scenario_type: collusive_clique
+    scenario_id: scenario_001
+    instrument_symbol: ALPHA
+    participant_count: 4
+    start_minute: 8
+    duration_minutes: 12
+    intensity: high
+    concealment: low
+    side_pattern: synchronized_buy_sell

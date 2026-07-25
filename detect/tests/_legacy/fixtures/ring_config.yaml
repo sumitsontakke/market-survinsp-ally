@@ -1,0 +1,47 @@
+schema_version: "0.1.0"
+generator_version: "0.3.0"
+seed: 43
+session:
+  trade_date: "2026-03-21"
+  open_time: "09:30:00"
+  close_time: "09:50:00"
+  timezone: "UTC"
+brokers:
+  count: 3
+beneficial_owners:
+  count: 8
+accounts:
+  per_owner_min: 1
+  per_owner_max: 2
+traders:
+  profiles:
+    retail_random: 0.3
+    momentum: 0.15
+    mean_reversion: 0.1
+    institutional_slicer: 0.05
+    liquidity_provider: 0.4
+instruments:
+  - symbol: "RING"
+    asset_class: "equity"
+    tick_size: 0.01
+    lot_size: 1
+    price_band: [99.0, 101.0]
+simulation:
+  steps: 20
+  passive_order_probability: 0.3
+  aggressive_order_probability: 0.45
+  cancel_probability: 0.0
+  base_order_size: 24
+  max_order_size: 90
+output:
+  format: "csv"
+scenarios:
+  - scenario_type: circular_trading_ring
+    scenario_id: scenario_002
+    instrument_symbol: RING
+    participant_count: 4
+    start_minute: 2
+    duration_minutes: 12
+    cycles: 5
+    intensity: medium
+    concealment: low
