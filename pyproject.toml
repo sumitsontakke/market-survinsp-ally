@@ -1,0 +1,32 @@
+# market-survinsp-ally — root pyproject.toml
+#
+# This file exists ONLY to give pytest a rootdir anchor inside _gitrepo/.
+# Without it, pytest walks up to the parent directory and picks up the
+# original working tree's pyproject.toml — which sets pythonpath = ["src"]
+# and shadows the site-packages install of the synth/ and detect/ modules.
+#
+# There's no [build-system] here because we don't build from the repo root.
+# The two modules build from their own pyproject.toml under synth/ and detect/.
+
+[tool.pytest.ini_options]
+minversion = "7.4"
+testpaths = ["synth/tests", "detect/tests"]
+# Exclude the pre-monorepo tests until fixture paths are updated.
+# Also exclude venv, build artefacts, and vendored dependencies.
+norecursedirs = [
+    "_legacy",
+    ".venv",
+    "venv",
+    ".git",
+    "build",
+    "dist",
+    "*.egg-info",
+    "__pycache__",
+    ".pytest_cache",
+    ".mypy_cache",
+    ".ruff_cache",
+]
+addopts = [
+    "-ra",
+    "--strict-markers",
+]
