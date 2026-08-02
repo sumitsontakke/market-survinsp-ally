@@ -46,9 +46,13 @@ keywords:
   - financial machine learning
   - RegTech
 license: MIT
-version: 1.0.0
-date-released: '2026-07-15'
-doi: 10.5281/zenodo.XXXXXXX
+version: v0.1.0
+date-released: '2026-08-02'
+doi: 10.5281/zenodo.21755230
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.21755230
+    description: Zenodo archive for v0.1.0 (this release)
 preferred-citation:
   type: article
   authors:

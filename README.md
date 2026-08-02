@@ -1,5 +1,9 @@
 # market-survinsp-ally
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21755230.svg)](https://doi.org/10.5281/zenodo.21755230)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![CI](https://github.com/sumitsontakke/market-survinsp-ally/actions/workflows/test.yml/badge.svg)](https://github.com/sumitsontakke/market-survinsp-ally/actions/workflows/test.yml)
+
 **A research toolkit for detecting collusive market manipulation with graph neural networks.**
 
 > `market-survinsp-ally` = *market surveillance & inspection ally*. A companion tool for a human surveillance analyst, not a replacement.
@@ -166,18 +170,22 @@ Two rules for schema-touching contributions:
 
 ## Citation
 
-If this work is useful to you, please cite:
+If this work is useful to you, please cite the software (Zenodo DOI):
 
 ```bibtex
 @software{sontakke2026msa,
-  author  = {Sontakke, Sumit and Joshi, Milan},
-  title   = {market-survinsp-ally: Graph-neural-network market surveillance toolkit},
-  year    = {2026},
-  url     = {https://github.com/sumitsontakke/market-survinsp-ally},
-  version = {1.0.0},
-  doi     = {10.5281/zenodo.XXXXXXX}
+  author    = {Sontakke, Sumit and Joshi, Milan},
+  title     = {{market-survinsp-ally}: Graph-neural-network market surveillance toolkit for collusive-trading detection},
+  year      = {2026},
+  month     = aug,
+  publisher = {Zenodo},
+  version   = {v0.1.0},
+  doi       = {10.5281/zenodo.21755230},
+  url       = {https://doi.org/10.5281/zenodo.21755230}
 }
 ```
+
+The DOI `10.5281/zenodo.21755230` resolves to this specific v0.1.0 release. Each future release gets its own DOI; the "all versions" DOI on Zenodo always points to the latest.
 
 The two associated conference papers each have their own BibTeX entries in [`docs/papers/CITATIONS.md`](docs/papers/CITATIONS.md).
 
