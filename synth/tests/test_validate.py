@@ -41,15 +41,19 @@ def _build_valid_run(root: Path, run_label: str = "R01_msa_clique_s42_20260314")
     run_dir = root / run_label
     run_dir.mkdir(parents=True, exist_ok=True)
 
+    # Uses the generator's actual PK column (`beneficial_owner_id`).
+    # SCHEMA.md aspirationally documents `owner_id`; reconciled in v0.3.0.
     _write_csv(
         run_dir / "beneficial_owners.csv",
         [
-            {"owner_id": "owner_001", "name": "Alice", "kyc_status": "verified",
-             "region": "IN", "created_at": "2026-01-01T00:00:00"},
-            {"owner_id": "owner_002", "name": "Bob", "kyc_status": "verified",
-             "region": "IN", "created_at": "2026-01-01T00:00:00"},
+            {"beneficial_owner_id": "owner_001", "name": "Alice",
+             "kyc_status": "verified", "region": "IN",
+             "created_at": "2026-01-01T00:00:00"},
+            {"beneficial_owner_id": "owner_002", "name": "Bob",
+             "kyc_status": "verified", "region": "IN",
+             "created_at": "2026-01-01T00:00:00"},
         ],
-        ["owner_id", "name", "kyc_status", "region", "created_at"],
+        ["beneficial_owner_id", "name", "kyc_status", "region", "created_at"],
     )
 
     _write_csv(
@@ -77,12 +81,15 @@ def _build_valid_run(root: Path, run_label: str = "R01_msa_clique_s42_20260314")
         ["instrument_id", "symbol", "asset_class", "listing_venue", "currency"],
     )
 
+    # Uses generator's actual column names (trade_date/open_time/close_time).
+    # SCHEMA.md documents session_date/open_ts/close_ts; reconciled in v0.3.0.
     _write_csv(
         run_dir / "sessions.csv",
-        [{"session_id": "session_001", "instrument_id": "instrument_001",
-          "session_date": "2026-03-14", "open_ts": "2026-03-14T09:30:00",
-          "close_ts": "2026-03-14T15:30:00"}],
-        ["session_id", "instrument_id", "session_date", "open_ts", "close_ts"],
+        [{"session_id": "session_001", "trade_date": "2026-03-14",
+          "open_time": "09:30:00", "close_time": "15:30:00",
+          "auction_windows": "", "timezone": "UTC"}],
+        ["session_id", "trade_date", "open_time", "close_time",
+         "auction_windows", "timezone"],
     )
 
     _write_csv(
@@ -298,19 +305,23 @@ def test_validate_run_bad_enum_side(tmp_path):
 
 def test_validate_run_missing_column(tmp_path):
     run_dir = _build_valid_run(tmp_path)
-    # Overwrite traders.csv with one required column dropped
+    # Overwrite traders.csv without a still-required column (`broker_id`).
+    # The permissive v0.2.0 required-set is: trader_id, account_id,
+    # beneficial_owner_id, broker_id — drop one of those to trigger.
     _write_csv(
         run_dir / "traders.csv",
         [{"trader_id": "trader_001", "account_id": "account_001",
-          "beneficial_owner_id": "owner_001", "broker_id": "broker_001",
+          "beneficial_owner_id": "owner_001",
           "trader_profile_id": "noise_trader", "risk_tier": "medium",
-          "region": "IN", "created_at": "2026-01-02T00:00:00"}],
-        ["trader_id", "account_id", "beneficial_owner_id", "broker_id",
-         "trader_profile_id", "risk_tier", "region", "created_at"],  # no `status`
+          "region": "IN", "created_at": "2026-01-02T00:00:00",
+          "status": "active"}],
+        ["trader_id", "account_id", "beneficial_owner_id",
+         "trader_profile_id", "risk_tier", "region", "created_at",
+         "status"],  # no `broker_id`
     )
     report = validate_run(run_dir)
     assert not report.ok
-    assert any("status" in i.message for i in report.errors)
+    assert any("broker_id" in i.message for i in report.errors)
 
 
 def test_validate_run_unknown_scenario_type_warns(tmp_path):
