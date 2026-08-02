@@ -86,12 +86,16 @@ The architectural finding — bolt-on tier-2 generalises across manipulation fam
 
 ## Try the investigator dashboard
 
+<p align="center">
+  <img alt="Screen recording of the Metric Timeline dashboard: milestone row expands to show phase details, then evolution chart and family-disjoint chart scroll into view" src="docs_img/metric_timeline_hero.gif" width="720"/>
+</p>
+
 ```bash
 docker compose -f detect/docker-compose.yml up webapp
 open http://localhost:8505/Metric_Timeline
 ```
 
-Landing pages of interest: `/Metric_Timeline` (model evolution + drift), `/Phase_G_Investigation` (per-trader deep dive with 3D subgraph + LLM justification), `/Demo_Review` (guided walk-through for a first-time viewer). A live screenshot will be added here once the dashboard is captured on a real screen.
+Landing pages of interest: `/Metric_Timeline` (model evolution + drift — shown above), `/Phase_G_Investigation` (per-trader deep dive with 3D subgraph + LLM justification), `/Demo_Review` (guided walk-through for a first-time viewer).
 
 ---
 
