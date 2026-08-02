@@ -26,7 +26,13 @@ norecursedirs = [
     ".mypy_cache",
     ".ruff_cache",
 ]
+# --import-mode=importlib avoids the "import file mismatch" error when two
+# test files share a basename in different folders (synth/tests/test_smoke.py
+# and detect/tests/test_smoke.py both being "test_smoke"). It's a CLI flag,
+# not an ini key, so it lives inside addopts.
+# See https://docs.pytest.org/en/stable/explanation/pythonpath.html#import-modes
 addopts = [
     "-ra",
     "--strict-markers",
+    "--import-mode=importlib",
 ]
