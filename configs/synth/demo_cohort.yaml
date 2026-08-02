@@ -1,0 +1,171 @@
+# demo_cohort.yaml
+#
+# 3-run demo cohort used by `make reproduce`. Designed to be small enough
+# to complete end-to-end in ~1 minute on a single CPU core, while still
+# exercising every stage of the pipeline: synthesis, feature extraction,
+# training, evaluation.
+#
+# Three runs, three manipulation families — one each — so the
+# family-disjoint story is visible even at demo scale:
+#   run_001: clique
+#   run_002: ring
+#   run_003: no manipulation (control)
+#
+# For paper-scale cohorts, see configs/synth/ood_cohort.yaml.
+
+cohort:
+  name: "demo"
+  schema_version: "0.1.0"
+  generator_version: "0.1.0"
+  description: >-
+    Smoke-test cohort for `make reproduce`. Three runs, three manipulation
+    families, tiny scale. Not statistically meaningful — verifies the
+    pipeline works, not that the numbers are paper-accurate.
+
+# ── Runs ──────────────────────────────────────────────────────────
+# Each run is one synthetic trading day. The generator emits the
+# 10-file per-run structure documented in SCHEMA.md.
+runs:
+
+  - run_id: "run_001_clique"
+    seed: 42
+    wrapper: "run_manipulation"   # dispatches to synth/generator/wrappers/run_manipulation.py
+    session:
+      trade_date: "2026-03-14"
+      open_time: "09:30:00"
+      close_time: "09:45:00"
+      timezone: "UTC"
+    brokers:
+      count: 2
+    beneficial_owners:
+      count: 8
+    accounts:
+      per_owner_min: 1
+      per_owner_max: 2
+    traders:
+      profiles:
+        retail_random: 0.4
+        momentum: 0.15
+        liquidity_provider: 0.45
+    instruments:
+      - symbol: "ALPHA"
+        asset_class: "equity"
+        tick_size: 0.01
+        lot_size: 1
+        price_band: [98.0, 102.0]
+    simulation:
+      steps: 15
+      passive_order_probability: 0.40
+      aggressive_order_probability: 0.50
+      cancel_probability: 0.05
+      base_order_size: 20
+      max_order_size: 100
+    output:
+      format: "csv"
+    scenarios:
+      - scenario_type: collusive_clique
+        scenario_id: "demo_clique_001"
+        instrument_symbol: "ALPHA"
+        participant_count: 3
+        start_minute: 3
+        duration_minutes: 8
+        intensity: "high"
+        concealment: "low"
+        side_pattern: "synchronized_buy_sell"
+
+  - run_id: "run_002_ring"
+    seed: 43
+    wrapper: "run_manipulation"
+    session:
+      trade_date: "2026-03-14"
+      open_time: "09:30:00"
+      close_time: "09:45:00"
+      timezone: "UTC"
+    brokers:
+      count: 2
+    beneficial_owners:
+      count: 8
+    accounts:
+      per_owner_min: 1
+      per_owner_max: 2
+    traders:
+      profiles:
+        retail_random: 0.4
+        momentum: 0.15
+        liquidity_provider: 0.45
+    instruments:
+      - symbol: "BETA"
+        asset_class: "equity"
+        tick_size: 0.01
+        lot_size: 1
+        price_band: [98.0, 102.0]
+    simulation:
+      steps: 15
+      passive_order_probability: 0.40
+      aggressive_order_probability: 0.50
+      cancel_probability: 0.05
+      base_order_size: 20
+      max_order_size: 100
+    output:
+      format: "csv"
+    scenarios:
+      - scenario_type: circular_trading_ring
+        scenario_id: "demo_ring_002"
+        instrument_symbol: "BETA"
+        participant_count: 4
+        start_minute: 3
+        duration_minutes: 8
+        cycles: 4
+        intensity: "medium"
+        concealment: "low"
+
+  - run_id: "run_003_control"
+    seed: 44
+    wrapper: "run_generic"
+    session:
+      trade_date: "2026-03-14"
+      open_time: "09:30:00"
+      close_time: "09:45:00"
+      timezone: "UTC"
+    brokers:
+      count: 2
+    beneficial_owners:
+      count: 8
+    accounts:
+      per_owner_min: 1
+      per_owner_max: 2
+    traders:
+      profiles:
+        retail_random: 0.5
+        momentum: 0.2
+        liquidity_provider: 0.3
+    instruments:
+      - symbol: "GAMMA"
+        asset_class: "equity"
+        tick_size: 0.01
+        lot_size: 1
+        price_band: [98.0, 102.0]
+    simulation:
+      steps: 15
+      passive_order_probability: 0.40
+      aggressive_order_probability: 0.50
+      cancel_probability: 0.05
+      base_order_size: 20
+      max_order_size: 100
+    output:
+      format: "csv"
+    # no `scenarios:` block — this is the negative control
+
+# ── Detector defaults (consumed by detect.cli) ─────────────────────
+# Values here are demo-appropriate, not paper-tuned. Tier-2 GBM only
+# because it's the fastest detector and demonstrates the family-disjoint
+# story on this cohort. Full v1/v4 GraphSAGE training is not enabled
+# for `make reproduce` — it requires a GPU and takes hours.
+detectors:
+  default: "tier2"
+  tier2:
+    gbm_n_estimators: 100     # small; paper uses 500
+    gbm_max_depth: 3
+    gbm_learning_rate: 0.1
+    cv_splits: 3              # small; paper uses leave-one-run-out (LOO-CV)
+    random_state: 42
