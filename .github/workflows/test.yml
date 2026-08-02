@@ -88,28 +88,6 @@ jobs:
         working-directory: ./detect
         run: python -m pytest -ra --cov=detect --cov-report=term-missing
 
-  schema-conformance:
-    name: schema - validate demo cohort
-    runs-on: ubuntu-latest
-    needs: [synth, detect]
-    # Only runs if there's a fixture cohort to validate. Skipped for now;
-    # will activate once detect/tests/fixtures/demo_cohort/ is checked in.
-    if: ${{ hashFiles('detect/tests/fixtures/demo_cohort/**') != '' }}
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.11"
-          cache: pip
-
-      - name: Install synth
-        working-directory: ./synth
-        run: |
-          python -m pip install --upgrade pip
-          pip install -e .
-
-      - name: Validate the checked-in demo fixture cohort
-        run: |
-          python -m synth.validate detect/tests/fixtures/demo_cohort/
+  # Schema-conformance job intentionally removed until a fixture cohort
+  # exists under detect/tests/fixtures/demo_cohort/. Add it back then;
+  # note that hashFiles() only works in step-level `if:`, never job-level.
