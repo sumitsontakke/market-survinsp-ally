@@ -88,10 +88,12 @@ python -m detect.evaluate --cohort cohorts/abides --model graphsage_v4 --out rep
 
 ## Family-disjoint leave-one-out (paper table row 3)
 
-Three retrains, one per held-out family:
+The paper's leave-one-family-out experiment uses **three** high-level
+families: `clique`, `ring`, and `mixed`. One retrain per held-out
+family:
 
 ```bash
-for family in clique ring front_account; do
+for family in clique ring mixed; do
     MSA_PHASE_G_HOLDOUT_FAMILY=$family \
         python -m detect.train --cohort cohorts/ood --model graphsage_v4 --gpu \
         --out models/v4_no_${family}.pt
@@ -102,7 +104,10 @@ for family in clique ring front_account; do
 done
 ```
 
-Do the same with `--model tier2_gbm` (much faster, CPU-only).
+Do the same with `--model tier2_gbm` (much faster, CPU-only). Note:
+`front_account` scenarios exist in the generator vocabulary but are
+grouped with `mixed` runs in the paper's cohort — they do not receive
+a separate leave-one-out fold.
 
 ## Getting the trained checkpoints without retraining
 
@@ -123,7 +128,8 @@ v4 and ~30 minutes for the tier-2 GBM — see the commands above.
   event loop; expect ~12 minutes per run. Not a hang, just slow.
 - **Numbers differ by >0.02 AUC from the paper** — seed sensitivity. Try
   averaging over 5 seeds via `--seeds 42,43,44,45,46`.
-- **`synth validate` reports missing SCHEMA-required columns** — expected
-  in v0.2.0; the validator's strict column set doesn't yet match the
-  v0.1.0 generator's actual output. `make reproduce` still completes
-  end-to-end. Reconciliation is a v0.3.0 task.
+- **`synth validate` reports column-count warnings but PASSes** — the
+  validator's required column set was deliberately reduced in v0.2.0
+  to match the v0.1.0 generator's actual output. Full SCHEMA.md
+  reconciliation (aspirational-vs-emitted column names) is a v0.3.0
+  task; `make reproduce` completes cleanly today regardless.
