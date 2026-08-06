@@ -106,24 +106,24 @@ Do the same with `--model tier2_gbm` (much faster, CPU-only).
 
 ## Getting the trained checkpoints without retraining
 
-For v0.2.0 and later, trained model checkpoints are hosted on Zenodo.
-See [`docs/CHECKPOINTS.md`](CHECKPOINTS.md) for links and download
-instructions. Once the download helper lands you'll be able to run:
+**Status as of v0.2.0: not available yet.** Trained model checkpoints are
+planned for the v0.3.0 release, at which point they will be archived on
+Zenodo with SHA-256-verified downloads. See
+[`docs/CHECKPOINTS.md`](CHECKPOINTS.md) for the intended layout and the
+`docs/v0.2.0_MILESTONE.md` § "Deferred to later" section for the roadmap.
 
-```bash
-python -m detect.registry.download --version v0.2.0
-```
-
-instead of the training commands above.
+Until then, retraining from the cohort takes ~2 hours on a single GPU for
+v4 and ~30 minutes for the tier-2 GBM — see the commands above.
 
 ## Troubleshooting
 
-- **`make reproduce` fails at `synth.generate`** — the demo cohort config
-  hasn't shipped yet (v0.1.0 gap). Check that `configs/synth/demo_cohort.yaml`
-  exists; if not, this is [issue #TBD](https://github.com/sumitsontakke/market-survinsp-ally/issues).
 - **CUDA out of memory during v4 training** — reduce batch size in the
   training config, or fall back to CPU with `--gpu` omitted.
 - **ABIDES cohort generation hangs** — ABIDES uses a single-threaded
   event loop; expect ~12 minutes per run. Not a hang, just slow.
-- **Numbers differ by >0.02 AUC from paper** — seed sensitivity. Try
+- **Numbers differ by >0.02 AUC from the paper** — seed sensitivity. Try
   averaging over 5 seeds via `--seeds 42,43,44,45,46`.
+- **`synth validate` reports missing SCHEMA-required columns** — expected
+  in v0.2.0; the validator's strict column set doesn't yet match the
+  v0.1.0 generator's actual output. `make reproduce` still completes
+  end-to-end. Reconciliation is a v0.3.0 task.
