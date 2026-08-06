@@ -56,17 +56,19 @@ cd market-survinsp-ally
 make reproduce            # ~15 min on CPU, ~5 min with GPU
 ```
 
-Under the hood:
+Under the hood `make reproduce` runs (exact commands, copy-pasteable):
 
 ```bash
-pip install -e synth/     # install the generator
-pip install -e detect/    # install the detectors
-python -m synth.generate  --config configs/demo_cohort.yaml   --out cohorts/demo
-python -m detect.train    --cohort cohorts/demo               --model tier2
-python -m detect.evaluate --cohort cohorts/demo               --model tier2
+pip install -e ./synth              # install the generator
+pip install -e ./detect             # install the detectors
+python -m synth generate  --config configs/synth/demo_cohort.yaml --out cohorts/demo
+python -m synth validate  cohorts/demo
+python -m detect features --cohort cohorts/demo
+python -m detect train    --cohort cohorts/demo --model tier2
+python -m detect evaluate --cohort cohorts/demo --model tier2
 ```
 
-Full reproduction of the paper cohorts requires GPU + Docker; see [`docs/REPRODUCE.md`](docs/REPRODUCE.md).
+Deterministic outcome on any machine with Python 3.10+: **mean AUC 0.7292** across leave-one-run-out folds on the demo cohort. Full-scale paper cohorts (240 days × 50 runs) require GPU and take hours; see [`docs/REPRODUCE.md`](docs/REPRODUCE.md).
 
 ---
 
@@ -150,12 +152,12 @@ market-survinsp-ally/
 
 By design, several artefacts live outside the repo:
 
-- **Model checkpoints** — hosted on [Zenodo](https://zenodo.org/) with a DOI. See `docs/CHECKPOINTS.md` for links.
+- **Model checkpoints** — **not shipped in v0.2.0.** Trained weights will be archived on Zenodo (with SHA-256-verified downloads) starting v0.3.0. Until then, retrain from a cohort per [`docs/REPRODUCE.md`](docs/REPRODUCE.md); see [`docs/CHECKPOINTS.md`](docs/CHECKPOINTS.md) for the intended layout.
 - **Full ABIDES cohort** — regenerated deterministically from `synth/`; the raw cohort is ~200 MB and not tracked.
 - **Raw NSE bhavcopy data** — you plug in your own or use the fetcher in `synth/`.
 - **Personal credentials, API tokens** — never.
 
-A small demo cohort (~5 MB) is bundled via Git LFS so `make reproduce` works end-to-end on a fresh clone without any external download.
+A tiny 3-run demo cohort is generated on-the-fly by `make reproduce` (from `configs/synth/demo_cohort.yaml`), so nothing extra needs downloading on a fresh clone. Full-scale paper cohorts are regenerated deterministically from the same generator using larger configs.
 
 ---
 
