@@ -212,11 +212,7 @@ If Zenodo didn't pick it up:
 
 ## Step 6 — Wire the DOI into CITATION.cff (3 min)
 
-Once you have the numeric DOI:
-
-1. Edit `CITATION.cff` at the repo root.
-2. Replace `doi: 10.5281/zenodo.XXXXXXX` with the actual DOI (e.g., `doi: 10.5281/zenodo.12345678`).
-3. Commit: `git commit -am "docs: pin Zenodo DOI in CITATION.cff"` and push to `main`.
+Once you have the numeric DOI, edit `CITATION.cff` at the repo root and set the `doi:` field to the value Zenodo minted. For example, this repo's v0.1.0 shipped with `doi: 10.5281/zenodo.21755230`. Commit with a message like `docs: pin Zenodo DOI in CITATION.cff` and push to `main`.
 
 Zenodo maintains one **concept DOI** (stable across all versions of the same repo) and one **version DOI** (unique per release). Use the *concept DOI* in `CITATION.cff` — it always resolves to the most recent version and is what you want on your CV.
 

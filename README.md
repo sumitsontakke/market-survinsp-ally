@@ -37,12 +37,12 @@ The full architectural finding — *bolt-on beats end-to-end on family shift* �
 
 ## Papers
 
-Two complementary conference-length papers framed for different reader communities:
+Two complementary manuscripts written from the same research, framed for different reader communities:
 
-1. **Feature-Augmented Graph Neural Networks for Out-of-Distribution Detection of Collusive Market Manipulation: A Multi-Cohort Study** — machine-learning / graph-learning framing. See [`docs/papers/model_journey_paper.pdf`](docs/papers/model_journey_paper.pdf).
-2. **Trade Market Manipulation Detection with Graph Neural Networks: A Calibrated-Synthesis-to-Deployment Surveillance Pipeline** — RegTech / applied-AI framing. See [`docs/papers/model_journey_paper_v2.pdf`](docs/papers/model_journey_paper_v2.pdf).
+1. **Feature-Augmented Graph Neural Networks for Out-of-Distribution Detection of Collusive Market Manipulation: A Multi-Cohort Study** — machine-learning / graph-learning framing. **Preprint, under journal review (Springer).** See [`docs/papers/model_journey_paper.pdf`](docs/papers/model_journey_paper.pdf).
+2. **Trade Market Manipulation Detection with Graph Neural Networks: A Calibrated-Synthesis-to-Deployment Surveillance Pipeline** — RegTech / applied-AI framing. **Preprint, submission pending.** See [`docs/papers/model_journey_paper_v2.pdf`](docs/papers/model_journey_paper_v2.pdf).
 
-Both are MTech dissertation-based work at PES University under Dr Milan Joshi's guidance.
+Both are MTech dissertation-based work at PES University under Dr Milan Joshi's guidance. Neither has appeared in a peer-reviewed venue yet; both PDFs are working preprints and may evolve during review.
 
 ---
 
@@ -134,7 +134,7 @@ market-survinsp-ally/
 ├── docs/
 │   ├── REPRODUCE.md      ← full-cohort reproduction guide
 │   ├── DEVELOPING.md     ← contributor guide
-│   ├── papers/           ← the two conference papers + preprint PDFs
+│   ├── papers/           ← preprint PDFs + LaTeX sources for both manuscripts
 │   └── img/              ← README figures, dashboard screenshots
 │
 ├── configs/              ← example generator + detector configs
@@ -191,7 +191,7 @@ If this work is useful to you, please cite the software (Zenodo DOI):
 
 The DOI `10.5281/zenodo.21755230` resolves to this specific v0.1.0 release. Each future release gets its own DOI; the "all versions" DOI on Zenodo always points to the latest.
 
-The two associated conference papers each have their own BibTeX entries in [`docs/papers/CITATIONS.md`](docs/papers/CITATIONS.md).
+The two associated manuscripts each have their own BibTeX entries in [`docs/papers/CITATIONS.md`](docs/papers/CITATIONS.md).
 
 ---
 
