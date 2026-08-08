@@ -1,5 +1,14 @@
 # Citations
 
+<!-- audit-workstream-A: preprints withdrawn 2026-08-06 -->
+
+> **Note (2026-08-06).** Both preprint PDFs have been temporarily
+> withdrawn pending post-audit revision (see [`../AUDIT.md`](../AUDIT.md) and [`../REMEDIATION_PLAN.md`](../REMEDIATION_PLAN.md)). The BibTeX entries below still reference
+> the withdrawn PDFs; **do not cite them in new work** until the
+> revised versions are published. The software DOI at
+> `10.5281/zenodo.21755230` is unaffected and remains citable.
+
+
 If you use this project, please cite **the software** (Zenodo DOI) and,
 if your work engages with either paper's specific framing, also cite
 the paper.

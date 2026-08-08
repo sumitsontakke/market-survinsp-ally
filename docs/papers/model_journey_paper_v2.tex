@@ -126,9 +126,9 @@ The literature on market-manipulation detection has historically been
 dominated by rule-driven systems that emit alerts when explicit
 microstructure conditions hold: layering thresholds on order
 cancellation rates, spoofing tests on persistence of unfilled top-book
-orders, pump-and-dump signatures on price-volume spikes. Khanna and
-Aggarwal \cite{khanna2021review} provide a useful survey of the rule
-era. The shift to supervised classifiers came later, motivated by the
+orders, pump-and-dump signatures on price-volume spikes. The rule era
+delivered high false-positive rates; the shift to supervised classifiers
+came later, motivated by the
 observation that rule-based systems have constant false-positive cost
 per rule and therefore scale poorly when many rules are layered.
 Cao et al.\ \cite{cao2014pso} applied particle-swarm-optimised
@@ -140,9 +140,8 @@ The graph turn is more recent. The genuinely collusive activity that
 modern markets observe---ring trading, clique cross-trading, front
 account schemes---does not have a per-trader signature. Each individual
 account in a ring may look unremarkable; the conspiracy lives in the
-edges. Graph neural networks have therefore become a natural fit, and
-several surveys discuss graph-based financial fraud detection
-\cite{sun2022fraudgnn}. We use GraphSAGE
+edges. Graph neural networks have therefore become a natural fit for
+graph-based financial fraud detection. We use GraphSAGE
 \cite{hamilton2017graphsage} for its inductive properties: production
 deployments need to operate on graphs whose node identities differ
 between training and test sessions. Spectral approaches such as GCN
@@ -941,116 +940,87 @@ individual components can be swapped without disturbing the rest.
 
 \begin{thebibliography}{99}
 
-\bibitem{khanna2021review}
-S.~Khanna and A.~Aggarwal, ``A survey of market manipulation
-detection: trends and open problems,'' \emph{Journal of Financial
-Surveillance}, vol.~8, no.~3, pp.~145--168, 2021.
+% Post-audit bibliography (v2, 2026-08-06). Ten entries; all high-confidence
+% real and independently DOI-verifiable. Ten problematic entries removed
+% during Workstream A of the pre-submission audit remediation:
+%   khanna2021review  — journal "Journal of Financial Surveillance" not
+%                        verifiable in any Springer/ACM/IEEE index
+%   sun2022fraudgnn   — key/content correspondence unverifiable
+%   cong2020amlsim    — attribution wrong (AMLSim is Suzumura & Kanezashi)
+%   nguyen2023iclr    — cited ICLR workshop "ML for Finance" does not exist
+%   leskovec2014snap  — key year 2014 vs entry year 2016 mismatch
+%   chen2016xgboost, wang2019fdgars, liu2021pickfeat, xu2019gin,
+%   dou2020carefraud — uncited in v1; will be re-added in Workstream E1
+%                       when concrete external-baseline comparisons land
+% See docs/AUDIT.md § B10-B11 and docs/REMEDIATION_PLAN.md workstream A.
 
 \bibitem{cao2014pso}
-Y.~Cao, Y.~Li, S.~Coleman, A.~Belatreche, and T.~McGinnity,
+Y. Cao, Y. Li, S. Coleman, A. Belatreche, and T. McGinnity,
 ``Particle-swarm-optimised support-vector machine for detecting
-market manipulation,'' in \emph{Proc.\ IEEE Symp.\ on Computational
+market manipulation,'' in \emph{Proc. IEEE Symp. on Computational
 Intelligence for Financial Engineering}, 2014.
 
-\bibitem{sun2022fraudgnn}
-T.~Sun, K.~Liu, X.~Chen, and H.~Ye, ``Graph neural networks for
-financial-fraud detection: a survey,'' \emph{ACM Computing Surveys},
-2022.
-
 \bibitem{hamilton2017graphsage}
-W.~L.~Hamilton, R.~Ying, and J.~Leskovec, ``Inductive representation
+W. L. Hamilton, R. Ying, and J. Leskovec, ``Inductive representation
 learning on large graphs,'' in \emph{Advances in Neural Information
 Processing Systems (NeurIPS)}, 2017.
 
 \bibitem{velickovic2018gat}
-P.~Veli\v{c}kovi\'{c}, G.~Cucurull, A.~Casanova, A.~Romero, P.~Li\`{o},
-and Y.~Bengio, ``Graph attention networks,'' in \emph{Int.\ Conf.\ on
+P. Veli\v{c}kovi\'{c}, G. Cucurull, A. Casanova, A. Romero, P. Li\`{o},
+and Y. Bengio, ``Graph attention networks,'' in \emph{Int. Conf. on
 Learning Representations (ICLR)}, 2018.
 
 \bibitem{kipf2017gcn}
-T.~N.~Kipf and M.~Welling, ``Semi-supervised classification with graph
-convolutional networks,'' in \emph{Int.\ Conf.\ on Learning
+T. N. Kipf and M. Welling, ``Semi-supervised classification with graph
+convolutional networks,'' in \emph{Int. Conf. on Learning
 Representations (ICLR)}, 2017.
 
 \bibitem{lin2017focal}
-T.-Y.~Lin, P.~Goyal, R.~Girshick, K.~He, and P.~Doll\'{a}r,
-``Focal loss for dense object detection,'' in \emph{Proc.\ IEEE Int.\
-Conf.\ on Computer Vision (ICCV)}, 2017.
+T.-Y. Lin, P. Goyal, R. Girshick, K. He, and P. Doll\'{a}r,
+``Focal loss for dense object detection,'' in \emph{Proc. IEEE Int.
+Conf. on Computer Vision (ICCV)}, 2017.
 
 \bibitem{friedman2001gradient}
-J.~H.~Friedman, ``Greedy function approximation: a gradient boosting
-machine,'' \emph{Annals of Statistics}, vol.~29, no.~5, pp.~1189--1232,
+J. H. Friedman, ``Greedy function approximation: a gradient boosting
+machine,'' \emph{Annals of Statistics}, vol. 29, no. 5, pp. 1189--1232,
 2001.
 
 \bibitem{recht2019imagenet}
-B.~Recht, R.~Roelofs, L.~Schmidt, and V.~Shankar, ``Do ImageNet
-classifiers generalize to ImageNet?'' in \emph{Proc.\ Int.\ Conf.\ on
+B. Recht, R. Roelofs, L. Schmidt, and V. Shankar, ``Do ImageNet
+classifiers generalize to ImageNet?'' in \emph{Proc. Int. Conf. on
 Machine Learning (ICML)}, 2019.
 
 \bibitem{koh2021wilds}
-P.~W.~Koh et al., ``WILDS: A benchmark of in-the-wild distribution
-shifts,'' in \emph{Proc.\ Int.\ Conf.\ on Machine Learning (ICML)}, 2021.
+P. W. Koh, S. Sagawa, H. Marklund, S. M. Xie, M. Zhang, A. Balsubramani,
+W. Hu, M. Yasunaga, R. L. Phillips, I. Gao, T. Lee, E. David, I. Stavness,
+W. Guo, B. A. Earnshaw, I. S. Haque, S. Beery, J. Leskovec, A. Kundaje,
+E. Pierson, S. Wang, D. Koller, S. Levine, and P. Liang, ``WILDS: A
+benchmark of in-the-wild distribution shifts,'' in \emph{Proc. Int.
+Conf. on Machine Learning (ICML)}, 2021.
 
 \bibitem{byrd2019abides}
-D.~Byrd, M.~Hybinette, and T.~H.~Balch, ``ABIDES: Towards
-high-fidelity multi-agent market simulation,'' in \emph{Proc.\ ACM
-SIGSIM Conf.\ on Principles of Advanced Discrete Simulation}, 2019.
+D. Byrd, M. Hybinette, and T. H. Balch, ``ABIDES: Towards
+high-fidelity multi-agent market simulation,'' in \emph{Proc. ACM
+SIGSIM Conf. on Principles of Advanced Discrete Simulation}, 2019.
 
 \bibitem{cont2001stylized}
-R.~Cont, ``Empirical properties of asset returns: stylized facts and
-statistical implications,'' \emph{Quantitative Finance}, vol.~1,
-no.~2, pp.~223--236, 2001.
+R. Cont, ``Empirical properties of asset returns: stylized facts and
+statistical implications,'' \emph{Quantitative Finance}, vol. 1,
+no. 2, pp. 223--236, 2001.
 
-\bibitem{chen2016xgboost}
-T.~Chen and C.~Guestrin, ``XGBoost: a scalable tree boosting system,''
-in \emph{Proc.\ ACM SIGKDD Conf.\ on Knowledge Discovery and Data
-Mining}, 2016.
 
-\bibitem{dou2020carefraud}
-Y.~Dou, Z.~Liu, L.~Sun, Y.~Deng, H.~Peng, and P.~S.~Yu, ``Enhancing
-graph neural network-based fraud detectors against camouflaged
-fraudsters,'' in \emph{Proc.\ ACM Int.\ Conf.\ on Information and
-Knowledge Management (CIKM)}, 2020.
-
-\bibitem{cong2020amlsim}
-W.~Cong, H.~K.~Suarez, L.~Akoglu, and M.~Mahdavi, ``AMLSim: a
-synthetic data generator for anti-money-laundering research,''
-\emph{IEEE BigData Workshop on Financial Fraud}, 2020.
 
 \bibitem{streamlit2024}
-Streamlit Team, ``Streamlit: the fastest way to build and share data
-apps,'' \url{https://streamlit.io/}, accessed 2026.
-
-\bibitem{nguyen2023iclr}
-H.~Nguyen, P.~Phung, and Y.~Wang, ``Towards out-of-distribution
-generalisation in graph neural networks: a benchmark,'' in
-\emph{Proc.\ Int.\ Conf.\ on Learning Representations (ICLR) Workshop
-on ML for Finance}, 2023.
-
-
-\bibitem{leskovec2014snap}
-J.~Leskovec and R.~Sosi\v{c}, ``SNAP: a general-purpose network
-analysis and graph-mining library,'' \emph{ACM Trans.\ Intell.\ Syst.\
-Technol.}, vol.~8, no.~1, pp.~1--20, 2016.
-
-\bibitem{xu2019gin}
-K.~Xu, W.~Hu, J.~Leskovec, and S.~Jegelka, ``How powerful are graph
-neural networks?'' in \emph{Int.\ Conf.\ on Learning Representations
-(ICLR)}, 2019.
-
-\bibitem{liu2021pickfeat}
-Y.~Liu, X.~Ao, Z.~Qin, J.~Chi, J.~Feng, H.~Yang, and Q.~He, ``Pick
-and choose: a GNN-based imbalanced learning approach for fraud
-detection,'' in \emph{Proc.\ The World Wide Web Conference (WWW)},
-2021.
+Streamlit Inc., ``Streamlit: A faster way to build and share data apps,''
+Software, 2024. \url{https://streamlit.io/}
 
 \bibitem{ollama2024}
-Ollama Team, ``Ollama: get up and running with large language models
-locally,'' \url{https://ollama.com/}, accessed 2026.
+Ollama, ``Ollama: get up and running with large language models locally,''
+Software, 2024. \url{https://ollama.com/}
 
 \bibitem{docker2024}
-Docker Inc., ``Docker engine reference,''
-\url{https://docs.docker.com/engine/}, accessed 2026.
+Docker Inc., ``Docker: Accelerated container application development,''
+Software, 2024. \url{https://www.docker.com/}
 
 \end{thebibliography}
 
