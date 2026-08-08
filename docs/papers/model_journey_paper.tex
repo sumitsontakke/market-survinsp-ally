@@ -1,3 +1,44 @@
+% Post-audit revision status (Workstream D, 2026-08-06)
+% ----------------------------------------------------------------------
+% This manuscript has been through pre-submission audit and partial
+% remediation. Applied so far:
+%   Workstream A - integrity: bibliography rebuilt (10 verified entries;
+%                 10 problematic removed); preprint PDFs withdrawn.
+%   Workstream C - statistics: computed but not yet folded in - see
+%                 outputs/remediation/C/*.md for CIs, class prior,
+%                 paired-difference headline, pooled-vs-mean.
+%   Workstream D - number corrections: audit-confirmed factual errors
+%                 corrected in-line (Sec. 5.1 hyperparameter AUCs,
+%                 cohort size, runtime cross-check). This block.
+%
+% NOT yet applied (requires Dr Milan Joshi sign-off before manuscript
+% is submission-ready; do not remove these FIXME markers until they are):
+%   FIXME(audit-B1)  - Abstract's family-disjoint mechanism claim is
+%                       undermined by artefact analysis (flag-everything
+%                       behaviour, not transfer failure). Reposition
+%                       around the +0.347 CI headline per REMEDIATION_PLAN
+%                       "Guiding decision" section.
+%   FIXME(audit-B4)  - Table 2 feature AUCs are test-set direction-flipped
+%                       and undisclosed. Either report raw AUCs or add
+%                       procedural disclosure in Sec. 4.2.
+%   FIXME(audit-B5)  - Sec. 5.10 case study contradicts pooled statistics
+%                       on all three of its claims and cites the wrong
+%                       cohort. Delete or rebuild.
+%   FIXME(audit-B6)  - No external published baseline. Workstream E1 must
+%                       land GAT + GIN before resubmission.
+%   FIXME(audit-B7)  - No CIs on the two headline regimes. Insert
+%                       DELONG_TABLE numbers next to every AUC in Sec. 5,
+%                       add bootstrap CIs to Tables 4-6.
+%   FIXME(audit-B8)  - Systematic clique failures (5 of 18 runs, recall
+%                       3-17%) omitted. Add per-run scatter figure and
+%                       failure analysis subsection.
+%   FIXME(audit-B9)  - Abstract claims "holds in distribution" but no
+%                       in-distribution evaluation is anywhere in the
+%                       paper. Add it or drop the framing.
+%
+% See docs/AUDIT.md and docs/REMEDIATION_PLAN.md for the full account.
+% ----------------------------------------------------------------------
+
 \documentclass[10pt,twocolumn,letterpaper]{article}
 
 \usepackage[letterpaper,margin=0.85in]{geometry}
@@ -230,7 +271,7 @@ traders) at the same threshold.
 The training cohort consists of five days of synthetic market
 sessions; each day comprises fifty independent runs sampled from a
 parameter envelope deliberately wider than the typical evaluation
-suite. Each run contains approximately 500 traders, of which
+suite. Each run contains approximately 201 traders (10\,037 traders total across the 50 within-generator OOD runs; earlier drafts reported this figure as $\sim$500 in error), of which
 \(0.05\%\)\,-\,\(2\%\) are manipulators belonging to a randomly drawn
 family. Manipulation duration is sampled between 10 and 60 minutes
 within the trading session. The five-day cohort design supports a
@@ -551,11 +592,20 @@ near-optimal before declaring the model the ceiling. Three
 single-knob variants were retrained: v1 (the baseline; focal
 \(\gamma=2.0,\alpha=0.85\), patience \(=6\)), v2
 (\(\gamma=1.0,\alpha=0.75\), patience \(=12\)), and v3
-(\(\gamma=2.0,\alpha=0.85\), patience \(=12\)). Trader-level AUCs were
-\(0.612\), \(0.486\), and \(0.083\) respectively. The patience knob
-alone collapsed the model. We concluded that hyperparameter tuning had
-hit a ceiling and that further improvement would require either richer
-features or richer model structure.
+(\(\gamma=2.0,\alpha=0.85\), patience \(=12\)). Edge AUCs (pooled over
+the 50-run within-generator OOD cohort) were \(0.6385\), \(0.3594\),
+and \(0.4837\) respectively (v1, v2, v3). The patience-only change
+(v3) reduced AUC to \(0.4837\), well below the baseline. Changing
+both the focal-loss parameters and patience together (v2) reduced
+AUC further to \(0.3594\). Neither variant improved on the baseline,
+and inspection of the score distributions confirmed that v3's
+apparent near-baseline behaviour arose from a degenerate
+flag-everything policy rather than genuine ranking improvement
+(mean per-run recall approaches 1.0 while per-family purity remains
+near \(2\times\) the trader base rate of \(0.10\)). We concluded
+that hyperparameter tuning within this envelope had hit a ceiling
+and that further improvement would require either richer features
+or richer model structure.
 
 \subsection{Within-Generator OOD Result}
 \label{sec:result-ood}
