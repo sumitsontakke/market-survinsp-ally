@@ -39,8 +39,15 @@ The full architectural finding — *bolt-on beats end-to-end on family shift* �
 
 Two complementary manuscripts written from the same research, framed for different reader communities:
 
-1. **Feature-Augmented Graph Neural Networks for Out-of-Distribution Detection of Collusive Market Manipulation: A Multi-Cohort Study** — machine-learning / graph-learning framing. **Preprint, under journal review (Springer).** See [`docs/papers/model_journey_paper.pdf`](docs/papers/model_journey_paper.pdf).
-2. **Trade Market Manipulation Detection with Graph Neural Networks: A Calibrated-Synthesis-to-Deployment Surveillance Pipeline** — RegTech / applied-AI framing. **Preprint, submission pending.** See [`docs/papers/model_journey_paper_v2.pdf`](docs/papers/model_journey_paper_v2.pdf).
+<!-- audit-workstream-A: preprints withdrawn 2026-08-06 -->
+> **Both preprints have been temporarily withdrawn** pending revision
+> following an internal pre-submission audit (see [`docs/AUDIT.md`](docs/AUDIT.md) and [`docs/REMEDIATION_PLAN.md`](docs/REMEDIATION_PLAN.md)). The LaTeX sources remain in this
+> repository as `docs/papers/*.tex` for transparency. Compiled PDFs
+> will be restored after Workstreams B-F land and Dr Milan signs off
+> on the revised manuscript.
+
+1. **Feature-Augmented Graph Neural Networks for Out-of-Distribution Detection of Collusive Market Manipulation: A Multi-Cohort Study** — machine-learning / graph-learning framing. **PDF withdrawn 2026-08-06; under revision.** LaTeX source: [`docs/papers/model_journey_paper.tex`](docs/papers/model_journey_paper.tex).
+2. **Trade Market Manipulation Detection with Graph Neural Networks: A Calibrated-Synthesis-to-Deployment Surveillance Pipeline** — RegTech / applied-AI framing. **PDF withdrawn 2026-08-06; under revision.** LaTeX source: [`docs/papers/model_journey_paper_v2.tex`](docs/papers/model_journey_paper_v2.tex).
 
 Both are MTech dissertation-based work at PES University under Dr Milan Joshi's guidance. Neither has appeared in a peer-reviewed venue yet; both PDFs are working preprints and may evolve during review.
 

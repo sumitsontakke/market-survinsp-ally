@@ -138,8 +138,8 @@ discusses what the comparison implies. Sections \ref{sec:lim} and
 
 \textbf{Market manipulation detection} has a long literature, much of
 it rule- or threshold-driven. Early work focused on layering, spoofing,
-and pump-and-dump patterns visible in order-book microstructure
-\cite{khanna2021review}. Supervised classifiers later appeared,
+and pump-and-dump patterns visible in order-book microstructure.
+Supervised classifiers later appeared,
 treating manipulation detection as a per-order or per-trader
 classification problem with hand-engineered statistics; Cao and
 co-authors, for instance, applied particle-swarm-tuned learners to
@@ -150,7 +150,7 @@ trader-marginal classifiers: any single account looks legitimate.
 \textbf{Graph-based fraud and anomaly detection} has emerged as a
 natural response. Recent work has applied graph neural networks to
 financial-fraud datasets and demonstrated meaningful lifts over
-non-relational baselines \cite{sun2022fraudgnn}, though most
+non-relational baselines, though most
 benchmarks remain within-distribution.
 
 \textbf{Graph neural networks for inductive learning.} We adopt
@@ -913,21 +913,25 @@ the end-to-end model wins within-distribution comparisons.
 
 \begin{thebibliography}{99}
 
-\bibitem{khanna2021review}
-S. Khanna and A. Aggarwal, ``A survey of market manipulation
-detection: trends and open problems,'' \emph{Journal of Financial
-Surveillance}, vol. 8, no. 3, pp. 145--168, 2021.
+% Post-audit bibliography (v2, 2026-08-06). Ten entries; all high-confidence
+% real and independently DOI-verifiable. Ten problematic entries removed
+% during Workstream A of the pre-submission audit remediation:
+%   khanna2021review  — journal "Journal of Financial Surveillance" not
+%                        verifiable in any Springer/ACM/IEEE index
+%   sun2022fraudgnn   — key/content correspondence unverifiable
+%   cong2020amlsim    — attribution wrong (AMLSim is Suzumura & Kanezashi)
+%   nguyen2023iclr    — cited ICLR workshop "ML for Finance" does not exist
+%   leskovec2014snap  — key year 2014 vs entry year 2016 mismatch
+%   chen2016xgboost, wang2019fdgars, liu2021pickfeat, xu2019gin,
+%   dou2020carefraud — uncited in v1; will be re-added in Workstream E1
+%                       when concrete external-baseline comparisons land
+% See docs/AUDIT.md § B10-B11 and docs/REMEDIATION_PLAN.md workstream A.
 
 \bibitem{cao2014pso}
 Y. Cao, Y. Li, S. Coleman, A. Belatreche, and T. McGinnity,
 ``Particle-swarm-optimised support-vector machine for detecting
 market manipulation,'' in \emph{Proc. IEEE Symp. on Computational
 Intelligence for Financial Engineering}, 2014.
-
-\bibitem{sun2022fraudgnn}
-T. Sun, K. Liu, X. Chen, and H. Ye, ``Graph neural networks for
-financial-fraud detection: a survey,'' \emph{ACM Computing Surveys},
-2022.
 
 \bibitem{hamilton2017graphsage}
 W. L. Hamilton, R. Ying, and J. Leskovec, ``Inductive representation
@@ -976,49 +980,6 @@ SIGSIM Conf. on Principles of Advanced Discrete Simulation}, 2019.
 R. Cont, ``Empirical properties of asset returns: stylized facts and
 statistical implications,'' \emph{Quantitative Finance}, vol. 1,
 no. 2, pp. 223--236, 2001.
-
-\bibitem{chen2016xgboost}
-T. Chen and C. Guestrin, ``XGBoost: A scalable tree boosting system,''
-in \emph{Proc. ACM SIGKDD Conf. on Knowledge Discovery and Data
-Mining}, 2016.
-
-\bibitem{wang2019fdgars}
-J. Wang, R. Wen, C. Wu, Y. Huang, and J. Xiong, ``FdGars: Fraudster
-detection via graph convolutional networks in online app reviews,'' in
-\emph{Companion Proc. The World Wide Web Conference (WWW)}, 2019.
-
-\bibitem{liu2021pickfeat}
-Y. Liu, X. Ao, Z. Qin, J. Chi, J. Feng, H. Yang, and Q. He, ``Pick and
-choose: A GNN-based imbalanced learning approach for fraud detection,''
-in \emph{Proc. The World Wide Web Conference (WWW)}, 2021.
-
-
-\bibitem{leskovec2014snap}
-J. Leskovec and R. Sosi\v{c}, ``SNAP: A general-purpose network
-analysis and graph-mining library,'' \emph{ACM Trans. Intell. Syst.
-Technol.}, vol. 8, no. 1, pp. 1--20, 2016.
-
-\bibitem{xu2019gin}
-K. Xu, W. Hu, J. Leskovec, and S. Jegelka, ``How powerful are graph
-neural networks?'' in \emph{Int. Conf. on Learning Representations
-(ICLR)}, 2019.
-
-\bibitem{cong2020amlsim}
-W. Cong, H. K. Suarez, M. Mahdavi, L. Akoglu, and M. Mahdavi, ``AMLSim:
-a synthetic data generator for anti-money-laundering research,''
-\emph{IEEE BigData Workshop on Financial Fraud}, 2020.
-
-\bibitem{dou2020carefraud}
-Y. Dou, Z. Liu, L. Sun, Y. Deng, H. Peng, and P. S. Yu, ``Enhancing
-graph neural network-based fraud detectors against camouflaged
-fraudsters,'' in \emph{Proc. ACM Int. Conf. on Information and
-Knowledge Management (CIKM)}, 2020.
-
-\bibitem{nguyen2023iclr}
-H. Nguyen, P. Phung, and Y. Wang, ``Towards out-of-distribution
-generalisation in graph neural networks: a benchmark,'' in
-\emph{Proc. Int. Conf. on Learning Representations (ICLR) Workshop on
-ML for Finance}, 2023.
 
 \end{thebibliography}
 
